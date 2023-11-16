@@ -81,7 +81,7 @@ public class DatabaseCreation {
             // Register JDBC driver
 
             // Open a connection
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quoteGenerator", user, password);
+            Connection conn = DriverManager.getConnection(urlTable, user, password);
 
             // Create a statement
             Statement stmt = conn.createStatement();
