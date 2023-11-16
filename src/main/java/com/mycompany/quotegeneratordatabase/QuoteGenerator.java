@@ -2,25 +2,24 @@
 package com.mycompany.quotegeneratordatabase;
 import java.util.*;
 
-// Final, it makes the list of quotes that it receives to be randomized, adds some validation and sanitation.
-
-public class RandomQuoteGenerator {
+public class QuoteGenerator {
     private static String[] quotes;
     
-    RandomQuoteGenerator(String[] quotes){
+    QuoteGenerator(String[] quotes){
         this.quotes = quotes;
     }
     
-    public static void generateRandomQuote(int numberOfQuotes) {
+    public static void generateQuotes(int numberOfQuotes) {
         
         System.out.println("Generating quotes...");
+        System.out.println("");
         Random random = new Random();
 
         // If user has inputted an integer other than 1, it produces more quotes.
         // else it will produce one quote.
         if (numberOfQuotes > 1){
                
-            System.out.println("Random Quotes: ");
+            System.out.println("Generated Quotes: ");
             
             Set<String> uniqueQuotes = new HashSet<>();
                            
@@ -36,8 +35,9 @@ public class RandomQuoteGenerator {
             
         } else {
             int index = random.nextInt(quotes.length);
-            System.out.println("Random Quote: " + quotes[index]);
+            System.out.println("Generated Quote: " + quotes[index]);
         }
 
     }
+    
 }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.quotegeneratordatabase;
 
 import java.sql.Connection;
@@ -15,36 +12,37 @@ import java.util.ArrayList;
 // Put the driver into a variable
 // 
 
-/**
- *
- * @author alvic viojan
- */
 public class DatabaseCreation {
     
-    //        database.getAllQuotes();
-    //        database.getLifeQuotes();
-    //        database.getSuccessQuotes();
-    //        database.getCreativityQuotes();
-    //        database.getHappinessQuotes();
-    //        database.getInnovationQuotes();
-    String root;
+    String user;
     String password;
     
-    DatabaseCreation(String root, String password){
-        this.root = root;
+    String urlDatabase;
+    String urlTable;
+
+    
+    DatabaseCreation(String user, String password, String urlTable){
+        this.user = user;
         this.password = password;
         
+        this.urlDatabase = "jdbc:mysql://localhost:3306/";
+        this.urlTable = "jdbc:mysql://localhost:3306/" + urlTable;
+        
+        try {
+            // Register the driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+       
     };
     
     public void createDatabase(){
         // Creating Database
         try {
-            // Register JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Open a connection
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/", root, password);
+            Connection conn = DriverManager.getConnection(urlDatabase, user, password);
 
             // Execute a query to create a new database
             Statement stmt = conn.createStatement();
@@ -81,11 +79,9 @@ public class DatabaseCreation {
     public void initializeData(){
         try {
             // Register JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Open a connection
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/quoteGenerator", root, password);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quoteGenerator", user, password);
 
             // Create a statement
             Statement stmt = conn.createStatement();
@@ -137,7 +133,7 @@ public class DatabaseCreation {
     public boolean isDatabaseCreated(String dbName) {
         boolean isCreated = false;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quoteGenerator", root, password);
+        try (Connection conn = DriverManager.getConnection(urlTable, user, password);
              ResultSet resultSet = conn.getMetaData().getCatalogs()) {
 
             while (resultSet.next()) {
@@ -160,7 +156,7 @@ public class DatabaseCreation {
         String query = "SELECT quotes FROM quotes";
         String[] quotesArray = null;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quoteGenerator", root, password);
+        try (Connection conn = DriverManager.getConnection(urlTable, user, password);
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
@@ -185,7 +181,7 @@ public class DatabaseCreation {
         String query = "SELECT quotes FROM quotes WHERE genre_id = " + genreId;
         String[] quotesArray = null;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quoteGenerator", root, password);
+        try (Connection conn = DriverManager.getConnection(urlTable, user, password);
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
@@ -193,7 +189,6 @@ public class DatabaseCreation {
 
             while (rs.next()) {
                 quotes.add(rs.getString("quotes"));
-                System.out.println(rs.getString("quotes"));
             }
 
             // Convert ArrayList to Array
