@@ -46,12 +46,12 @@ public class DatabaseCreation {
 
             // Execute a query to create a new database
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("CREATE DATABASE quoteGenerator");
+            stmt.executeUpdate("CREATE DATABASE " + urlTable);
 
             System.out.println("Database created successfully...");
 
             // Select the newly created database
-            stmt.executeUpdate("USE quoteGenerator");
+            stmt.executeUpdate("USE " + urlTable);
 
             // Create the 'quotes' table
             stmt.executeUpdate("CREATE TABLE quotes ("
