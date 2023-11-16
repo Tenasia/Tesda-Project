@@ -22,7 +22,8 @@ public class QuoteGeneratorDatabase {
         
         Scanner scanner = new Scanner(System.in);
         
-        DatabaseCreation database = new DatabaseCreation("root", "Akosiwilliam47", "quoteGenerator");
+        // Database user, password, and database name - This will initialize data and create database.
+        DatabaseCreation database = new DatabaseCreation("root", "", "quoteGenerator");
         
         if (database.isDatabaseCreated("quoteGenerator")){     
             database.createDatabase();
